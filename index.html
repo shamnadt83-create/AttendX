@@ -4,976 +4,441 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AttendX | Attendance Management</title>
+<title>AttendX Advanced</title>
 
 <style>
-:root {
-  --bg: #07111f;
-  --panel: #101e30;
-  --panel2: #15263a;
-  --text: #f2f7ff;
-  --muted: #91a4ba;
-  --teal: #14d6c5;
-  --danger: #ff647c;
-  --border: #26394f;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:#080d1b;color:white}
+[hidden]{display:none!important}
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:24px 8%;background:#0d1426}
+.navbar h2{font-size:28px}
+.navbar span,.hero h1 span{color:#55d6be}
+nav a{color:#d6deef;text-decoration:none;margin-left:24px}
+nav a:hover{color:#55d6be}
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-}
+.hero{min-height:480px;padding:80px 8%;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;background:radial-gradient(ellipse at top right,#173b51,#080d1b 65%)}
+.hero-content{max-width:580px}
+.tag{color:#55d6be;letter-spacing:3px;font-size:12px;margin-bottom:20px}
+.hero h1{font-size:clamp(36px,5vw,58px);line-height:1.15;margin-bottom:22px}
+.description{color:#b7c2d8;line-height:1.8;margin-bottom:30px}
 
-button, input {
-  font: inherit;
-}
+.primary-btn,.secondary-btn{display:inline-block;padding:14px 24px;border:0;border-radius:10px;background:#55d6be;color:#08131d;font-weight:bold;text-decoration:none;cursor:pointer}
+.secondary-btn{background:#263750;color:white}
+.hero-card,.feature-card{background:#111c30;border:1px solid #263750;border-radius:18px;padding:30px}
+.hero-card{width:280px;text-align:center}
+.icon{font-size:55px;margin-bottom:18px}
+.hero-card p,.feature-card p,.login-section p{color:#aebbd1;line-height:1.7;margin-top:12px}
+.status{color:#55d6be;margin-top:28px;font-size:13px}
 
-button {
-  cursor: pointer;
-  border: none;
-}
+.features,.login-section{padding:65px 8%;text-align:center}
+.features h2,.login-section h2{font-size:30px;margin-bottom:30px}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:35px;text-align:left}
+.feature-card h3{margin-bottom:12px}
+.feature-status{display:inline-block;margin-top:18px;padding:6px 10px;border:1px solid #526078;border-radius:20px;color:#aebbd1;font-size:11px}
+.login-section{background:#0d1426}
+.disabled-feature{margin-top:24px;background:#263750;color:#aebbd1;padding:14px 24px;border:0;border-radius:10px;cursor:not-allowed}
 
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 7%;
-  background: #0b192a;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+.registration-section{padding:70px 8%;background:linear-gradient(180deg,#0a1222,#0d1426)}
+.section-heading{text-align:center;margin-bottom:38px}
+.section-heading h2{font-size:32px;margin-bottom:12px}
+.section-heading p:last-child{color:#aebbd1;line-height:1.7}
+.registration-layout{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(320px,1.15fr);gap:24px;align-items:start}
+.registration-form,.student-directory{background:#111c30;border:1px solid #263750;border-radius:18px;padding:26px}
+.registration-form label{display:block;color:#d6deef;font-size:13px;margin:16px 0 8px}
+.registration-form input,.directory-heading input{width:100%;padding:13px 14px;border:1px solid #34445e;border-radius:9px;background:#080d1b;color:white;outline:none;font:inherit}
+.registration-form input:focus,.directory-heading input:focus{border-color:#55d6be}
+.registration-form input::placeholder,.directory-heading input::placeholder{color:#78869e}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-row>div{min-width:0}
+.optional-label{color:#8493aa;font-size:11px}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.form-actions button{font-size:13px}
+.form-message{min-height:20px;margin-top:14px;color:#55d6be;font-size:13px;line-height:1.5}
+.form-message.error{color:#ff9292}
 
-.logo {
-  font-size: 25px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
+.directory-heading{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:20px;flex-wrap:wrap}
+.directory-heading h3{font-size:20px}
+.directory-heading p{color:#91a0b8;font-size:12px;margin-top:7px}
+.directory-heading input{max-width:220px}
+.student-list{display:grid;gap:12px}
+.student-item{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px;background:#0b1425;border:1px solid #263750;border-radius:12px}
+.student-details{min-width:0}
+.student-details h4{font-size:15px;margin-bottom:7px}
+.student-details p{color:#aebbd1;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.student-details .student-uid{color:#55d6be}
+.student-actions{display:flex;gap:7px;flex-shrink:0}
+.small-btn{padding:8px 10px;border:1px solid #40516b;border-radius:7px;background:#1a2940;color:#e8eef7;cursor:pointer}
+.delete-btn{color:#ffaaaa}
+.empty-state{padding:28px 10px;text-align:center;color:#8493aa;font-size:13px}
+.storage-note{margin-top:22px;color:#8493aa;text-align:center;font-size:12px;line-height:1.6}
 
-.logo span {
-  color: var(--teal);
-}
+footer{text-align:center;padding:25px;color:#8e9bb2;font-size:13px}
 
-.nav-links {
-  display: flex;
-  gap: 22px;
-}
-
-.nav-links a {
-  color: var(--muted);
-  text-decoration: none;
-}
-
-.nav-links a:hover {
-  color: var(--teal);
-}
-
-.hero {
-  padding: 90px 7%;
-  text-align: center;
-  background:
-    radial-gradient(circle at top, #123c4a 0%, transparent 55%),
-    var(--bg);
-}
-
-.hero h1 {
-  font-size: clamp(36px, 7vw, 65px);
-  line-height: 1.15;
-}
-
-.hero h1 span {
-  color: var(--teal);
-}
-
-.hero p {
-  color: var(--muted);
-  max-width: 600px;
-  margin: 18px auto 25px;
-}
-
-.primary-btn {
-  background: var(--teal);
-  color: #04141c;
-  padding: 12px 23px;
-  border-radius: 8px;
-  font-weight: 700;
-}
-
-.primary-btn:hover {
-  opacity: .85;
-}
-
-section {
-  padding: 55px 7%;
-}
-
-.section-title {
-  font-size: 29px;
-  margin-bottom: 10px;
-}
-
-.section-subtitle {
-  color: var(--muted);
-  margin-bottom: 25px;
-}
-
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 18px;
-}
-
-.feature-card {
-  background: var(--panel);
-  padding: 23px;
-  border: 1px solid var(--border);
-  border-radius: 13px;
-}
-
-.feature-card h3 {
-  margin-bottom: 8px;
-  color: var(--teal);
-}
-
-.feature-card p {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 25px;
-  border-radius: 14px;
-  margin-bottom: 22px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 15px;
-}
-
-label {
-  display: block;
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 6px;
-}
-
-input {
-  width: 100%;
-  background: #091727;
-  border: 1px solid var(--border);
-  color: white;
-  border-radius: 8px;
-  padding: 12px;
-  outline: none;
-}
-
-input:focus {
-  border-color: var(--teal);
-}
-
-.form-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 18px;
-  flex-wrap: wrap;
-}
-
-.secondary-btn {
-  background: var(--panel2);
-  color: var(--text);
-  padding: 11px 18px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-}
-
-.danger-btn {
-  background: #492130;
-  color: #ff9aaa;
-  padding: 8px 12px;
-  border-radius: 6px;
-}
-
-.edit-btn {
-  background: #17434a;
-  color: var(--teal);
-  padding: 8px 12px;
-  border-radius: 6px;
-}
-
-.status {
-  margin-top: 15px;
-  font-size: 14px;
-  color: var(--muted);
-  min-height: 22px;
-}
-
-.status.success {
-  color: var(--teal);
-}
-
-.status.error {
-  color: var(--danger);
-}
-
-.hidden {
-  display: none !important;
-}
-
-.search-box {
-  max-width: 400px;
-  margin-bottom: 18px;
-}
-
-.table-wrap {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 650px;
-}
-
-th, td {
-  text-align: left;
-  padding: 13px 12px;
-  border-bottom: 1px solid var(--border);
-  font-size: 14px;
-}
-
-th {
-  color: var(--teal);
-  font-weight: 700;
-}
-
-td {
-  color: #dce7f4;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 7px;
-}
-
-.login-panel {
-  max-width: 450px;
-  margin: auto;
-}
-
-.login-panel input {
-  margin-bottom: 15px;
-}
-
-.admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.count-card {
-  background: var(--panel2);
-  padding: 16px 22px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-}
-
-.count-card strong {
-  color: var(--teal);
-  font-size: 25px;
-  display: block;
-}
-
-footer {
-  padding: 25px;
-  text-align: center;
-  color: var(--muted);
-  border-top: 1px solid var(--border);
-  font-size: 13px;
-}
-
-@media(max-width: 600px) {
-  .navbar {
-    padding: 15px 5%;
-  }
-
-  .nav-links {
-    gap: 12px;
-    font-size: 13px;
-  }
-
-  section {
-    padding: 40px 5%;
-  }
-
-  .hero {
-    padding: 70px 5%;
-  }
-
-  .panel {
-    padding: 18px;
-  }
+@media(max-width:850px){.registration-layout{grid-template-columns:1fr}}
+@media(max-width:600px){
+.navbar{padding:20px 5%;flex-wrap:wrap;gap:18px}
+nav{display:flex;flex-wrap:wrap;gap:12px}
+nav a{margin-left:0}
+.hero{padding:55px 6%}
+.hero-card{width:100%}
+.registration-section{padding:55px 5%}
+.registration-form,.student-directory{padding:20px}
+.student-item{align-items:flex-start;flex-direction:column}
 }
 </style>
 </head>
 
 <body>
 
-<nav class="navbar">
-  <div class="logo">Attend<span>X</span></div>
-  <div class="nav-links">
-    <a href="#home">Home</a>
-    <a href="#features">Features</a>
-    <a href="#admin">Admin</a>
-  </div>
+<header class="navbar">
+<h2>Attend<span>X</span></h2>
+<nav>
+<a href="#home">Home</a>
+<a href="#features">Features</a>
+<a href="#registration">Students</a>
+<a href="#login">Login</a>
 </nav>
-
-<header class="hero" id="home">
-  <h1>Smart Attendance<br><span>Management System</span></h1>
-  <p>
-    A smarter way to manage student records and build
-    a connected attendance management experience.
-  </p>
-  <a href="#admin">
-    <button class="primary-btn">Admin Login</button>
-  </a>
 </header>
 
-<section id="features">
-  <h2 class="section-title">System Features</h2>
-  <p class="section-subtitle">Tools available in AttendX.</p>
+<main>
 
-  <div class="feature-grid">
-    <div class="feature-card">
-      <h3>01. Student Records</h3>
-      <p>Register and manage student information.</p>
-    </div>
-    <div class="feature-card">
-      <h3>02. RFID Support</h3>
-      <p>Store RFID card UIDs for future integration.</p>
-    </div>
-    <div class="feature-card">
-      <h3>03. Live Database</h3>
-      <p>Keep student records synchronized with Firebase.</p>
-    </div>
-    <div class="feature-card">
-      <h3>04. Secure Admin</h3>
-      <p>Restrict management access to the authorized admin.</p>
-    </div>
-  </div>
+<section class="hero" id="home">
+<div class="hero-content">
+<p class="tag">SMART SCHOOL ATTENDANCE</p>
+<h1>Welcome to<br><span>AttendX Advanced</span></h1>
+<p class="description">
+A smarter way to manage student attendance,
+track entry times and keep parents informed.
+</p>
+<a class="primary-btn" href="#registration">Register a Student →</a>
+</div>
+
+<div class="hero-card">
+<div class="icon">🎓</div>
+<h3>Smart Attendance</h3>
+<p>Simple. Secure. Connected.</p>
+<div class="status">● Student Registration Ready</div>
+</div>
 </section>
 
-<section id="admin">
-  <h2 class="section-title">Admin Dashboard</h2>
-  <p class="section-subtitle">Sign in to manage AttendX student records.</p>
+<section class="features" id="features">
+<h2>Everything in One Place</h2>
+<div class="feature-grid">
 
-  <div id="loginPanel" class="panel login-panel">
-    <h3 style="margin-bottom:18px">Admin Login</h3>
+<div class="feature-card">
+<h3>📋 Attendance</h3>
+<p>Manage student attendance records.</p>
+<span class="feature-status">Coming Soon</span>
+</div>
 
-    <label for="adminEmail">Email Address</label>
-    <input id="adminEmail" type="email" placeholder="Enter admin email"
-      autocomplete="username">
+<div class="feature-card">
+<h3>🕒 Entry Tracking</h3>
+<p>Record student entry times.</p>
+<span class="feature-status">Coming Soon</span>
+</div>
 
-    <label for="adminPassword">Password</label>
-    <input id="adminPassword" type="password" placeholder="Enter password"
-      autocomplete="current-password">
+<div class="feature-card">
+<h3>🔐 Secure Login</h3>
+<p>Separate access for admins and parents.</p>
+<span class="feature-status">Coming Soon</span>
+</div>
 
-    <button id="loginBtn" class="primary-btn" style="width:100%">
-      Login
-    </button>
+<div class="feature-card">
+<h3>📡 RFID Scan</h3>
+<p>Connect RFID cards to student profiles.</p>
+<span class="feature-status">Coming Soon</span>
+</div>
 
-    <p id="loginStatus" class="status"></p>
-  </div>
+<div class="feature-card">
+<h3>📊 Reports</h3>
+<p>View attendance summaries and reports.</p>
+<span class="feature-status">Coming Soon</span>
+</div>
 
-  <div id="dashboard" class="hidden">
+<div class="feature-card">
+<h3>⚙️ Settings</h3>
+<p>Manage system preferences.</p>
+<span class="feature-status">Coming Soon</span>
+</div>
 
-    <div class="admin-header">
-      <div>
-        <h3>Welcome, Admin</h3>
-        <p style="color:var(--muted);font-size:13px">
-          Student management dashboard
-        </p>
-      </div>
-
-      <button id="logoutBtn" class="secondary-btn">Logout</button>
-    </div>
-
-    <div class="count-card" style="margin-bottom:22px">
-      <span style="color:var(--muted)">Total Students</span>
-      <strong id="studentCount">0</strong>
-    </div>
-
-    <div class="panel">
-      <h3 id="formTitle" style="margin-bottom:18px">
-        Register New Student
-      </h3>
-
-      <form id="studentForm">
-        <div class="form-grid">
-
-          <div>
-            <label for="studentName">Student Name *</label>
-            <input id="studentName" type="text"
-              placeholder="Student name" required>
-          </div>
-
-          <div>
-            <label for="rollNumber">Roll Number *</label>
-            <input id="rollNumber" type="text"
-              placeholder="Roll number" required>
-          </div>
-
-          <div>
-            <label for="className">Class *</label>
-            <input id="className" type="text"
-              placeholder="Class" required>
-          </div>
-
-          <div>
-            <label for="sectionName">Section</label>
-            <input id="sectionName" type="text"
-              placeholder="Section">
-          </div>
-
-          <div>
-            <label for="rfidUID">RFID UID</label>
-            <input id="rfidUID" type="text"
-              placeholder="Scan or enter RFID UID">
-          </div>
-
-        </div>
-
-        <div class="form-actions">
-          <button id="saveBtn" class="primary-btn" type="submit">
-            Add Student
-          </button>
-
-          <button id="cancelEditBtn" class="secondary-btn hidden"
-            type="button">
-            Cancel Edit
-          </button>
-        </div>
-
-        <p id="formStatus" class="status"></p>
-      </form>
-    </div>
-
-    <div class="panel">
-      <h3 style="margin-bottom:17px">Student Directory</h3>
-
-      <input id="searchInput" class="search-box" type="search"
-        placeholder="Search name, roll number, class or RFID...">
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Roll No.</th>
-              <th>Class</th>
-              <th>Section</th>
-              <th>RFID UID</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="studentTable">
-            <tr>
-              <td colspan="6">Loading students...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <p id="directoryStatus" class="status"></p>
-    </div>
-
-  </div>
+</div>
 </section>
+
+<section class="registration-section" id="registration">
+
+<div class="section-heading">
+<p class="tag">STUDENT MANAGEMENT</p>
+<h2>Student Registration</h2>
+<p>Add and manage student profiles.</p>
+</div>
+
+<div class="registration-layout">
+
+<form id="studentForm" class="registration-form">
+<input type="hidden" id="editingStudentId">
+
+<label>Student Name</label>
+<input id="studentName" type="text" placeholder="Enter student name" maxlength="80" required>
+
+<label>Roll Number</label>
+<input id="rollNumber" type="text" placeholder="Enter roll number" maxlength="30" required>
+
+<div class="form-row">
+<div>
+<label>Class</label>
+<input id="studentClass" type="text" placeholder="e.g. Plus One" maxlength="40" required>
+</div>
+<div>
+<label>Section</label>
+<input id="studentSection" type="text" placeholder="e.g. A" maxlength="20">
+</div>
+</div>
+
+<label>RFID Card UID <span class="optional-label">(optional for now)</span></label>
+<input id="cardUID" type="text" placeholder="Enter RFID UID" maxlength="50">
+
+<div class="form-actions">
+<button type="submit" class="primary-btn" id="saveStudentBtn">Register Student</button>
+<button type="button" class="secondary-btn" id="cancelEditBtn" hidden>Cancel Edit</button>
+</div>
+
+<p id="formMessage" class="form-message" role="status"></p>
+</form>
+
+<div class="student-directory">
+<div class="directory-heading">
+<div>
+<h3>Registered Students</h3>
+<p id="studentCount">0 students registered</p>
+</div>
+<input id="studentSearch" type="search" placeholder="Search students...">
+</div>
+
+<div id="studentList" class="student-list"></div>
+<p id="emptyState" class="empty-state">No students registered yet.</p>
+</div>
+
+</div>
+
+<p class="storage-note">
+Records are saved in this browser only until Firebase is connected.
+</p>
+</section>
+
+<section class="login-section" id="login">
+<h2>AttendX Admin Login</h2>
+<p>Admin login will be enabled in a later setup step.</p>
+<button type="button" class="disabled-feature" disabled>Admin Login — Coming Soon</button>
+</section>
+
+</main>
 
 <footer>
-  AttendX © 2026 | Smart Attendance Management System
+<p>© 2026 AttendX Advanced | Smart School Attendance</p>
 </footer>
 
-<script type="module">
-import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+<script>
+const STORAGE_KEY = "attendx_students_v1";
 
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+const studentForm = document.getElementById("studentForm");
+const studentNameInput = document.getElementById("studentName");
+const rollNumberInput = document.getElementById("rollNumber");
+const studentClassInput = document.getElementById("studentClass");
+const studentSectionInput = document.getElementById("studentSection");
+const cardUIDInput = document.getElementById("cardUID");
+const editingStudentIdInput = document.getElementById("editingStudentId");
+const studentList = document.getElementById("studentList");
+const studentSearch = document.getElementById("studentSearch");
+const studentCount = document.getElementById("studentCount");
+const emptyState = document.getElementById("emptyState");
+const formMessage = document.getElementById("formMessage");
+const saveStudentBtn = document.getElementById("saveStudentBtn");
+const cancelEditBtn = document.getElementById("cancelEditBtn");
 
-import {
-  getDatabase,
-  ref,
-  push,
-  set,
-  update,
-  remove,
-  onValue
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
-
-/* FIREBASE CONFIGURATION */
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC9JpS9Sb78eLhqfqag9wYPg9k7HFfN5nA",
-  authDomain: "attendx-450f9.firebaseapp.com",
-  databaseURL: "https://attendx-450f9-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "attendx-450f9",
-  storageBucket: "attendx-450f9.firebasestorage.app",
-  messagingSenderId: "1094862674152",
-  appId: "1:1094862674152:web:161aaf54530cfe3694d15d",
-  measurementId: "G-TR3E797PMW"
-};
-
-/* INITIALIZE FIREBASE */
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const database = getDatabase(app);
-
-const ADMIN_UID = "5ibsR7imJ9ZApSoxcGLwdDNpRz23";
-
-/* ELEMENT REFERENCES */
-
-const $ = (id) => document.getElementById(id);
-
-const loginPanel = $("loginPanel");
-const dashboard = $("dashboard");
-
-const loginStatus = $("loginStatus");
-const formStatus = $("formStatus");
-const directoryStatus = $("directoryStatus");
-
-let students = [];
-let editingStudentId = null;
-let stopStudentsListener = null;
-
-/* STATUS MESSAGES */
-
-function showStatus(element, message, type = "") {
-  element.textContent = message;
-  element.className = "status " + type;
+function getStudents(){
+try{
+const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
+return Array.isArray(data)?data:[];
+}catch(error){
+console.error(error);
+return [];
+}
 }
 
-/* DASHBOARD VISIBILITY */
-
-function showDashboard(isAdmin) {
-  loginPanel.classList.toggle("hidden", isAdmin);
-  dashboard.classList.toggle("hidden", !isAdmin);
+function saveStudents(students){
+try{
+localStorage.setItem(STORAGE_KEY,JSON.stringify(students));
+return true;
+}catch(error){
+showMessage("Unable to save in this browser.",true);
+return false;
+}
 }
 
-/* LOGIN */
+function showMessage(message,isError=false){
+formMessage.textContent=message;
+formMessage.classList.toggle("error",isError);
+}
 
-$("loginBtn").addEventListener("click", async () => {
-  const email = $("adminEmail").value.trim();
-  const password = $("adminPassword").value;
+function normalize(value){
+return String(value||"").trim().toLowerCase();
+}
 
-  if (!email || !password) {
-    showStatus(loginStatus, "Enter email and password.", "error");
-    return;
-  }
+function resetForm(){
+studentForm.reset();
+editingStudentIdInput.value="";
+saveStudentBtn.textContent="Register Student";
+cancelEditBtn.hidden=true;
+}
 
-  const button = $("loginBtn");
-  button.disabled = true;
-  button.textContent = "Signing in...";
+function renderStudents(){
+const students=getStudents();
+const query=normalize(studentSearch.value);
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    $("adminPassword").value = "";
-  } catch (error) {
-    showStatus(loginStatus, getFriendlyError(error), "error");
-  } finally {
-    button.disabled = false;
-    button.textContent = "Login";
-  }
+const filtered=students.filter(student=>{
+const content=[student.name,student.rollNumber,student.className,student.section,student.cardUID].join(" ");
+return normalize(content).includes(query);
 });
 
-/* ENTER KEY LOGIN */
+studentList.replaceChildren();
+studentCount.textContent=students.length+" student"+(students.length===1?"":"s")+" registered";
+emptyState.hidden=filtered.length>0;
 
-$("adminPassword").addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    $("loginBtn").click();
-  }
+filtered.forEach(student=>{
+const card=document.createElement("article");
+card.className="student-item";
+
+const details=document.createElement("div");
+details.className="student-details";
+
+const name=document.createElement("h4");
+name.textContent=student.name;
+
+const info=document.createElement("p");
+info.textContent="Roll No: "+student.rollNumber+" • Class: "+student.className+(student.section?" - "+student.section:"");
+
+const uid=document.createElement("p");
+uid.className="student-uid";
+uid.textContent="RFID UID: "+(student.cardUID||"Not assigned");
+
+details.append(name,info,uid);
+
+const actions=document.createElement("div");
+actions.className="student-actions";
+
+const edit=document.createElement("button");
+edit.type="button";
+edit.className="small-btn";
+edit.textContent="Edit";
+edit.addEventListener("click",()=>editStudent(student.id));
+
+const remove=document.createElement("button");
+remove.type="button";
+remove.className="small-btn delete-btn";
+remove.textContent="Delete";
+remove.addEventListener("click",()=>deleteStudent(student.id));
+
+actions.append(edit,remove);
+card.append(details,actions);
+studentList.append(card);
 });
-
-/* AUTHENTICATION STATE */
-
-onAuthStateChanged(auth, async (user) => {
-
-  if (!user) {
-    if (stopStudentsListener) {
-      stopStudentsListener();
-      stopStudentsListener = null;
-    }
-
-    students = [];
-    editingStudentId = null;
-    showDashboard(false);
-    renderStudents();
-    return;
-  }
-
-  if (user.uid !== ADMIN_UID) {
-    showDashboard(false);
-    showStatus(loginStatus, "Access denied: Unauthorized account.", "error");
-    await signOut(auth);
-    return;
-  }
-
-  showDashboard(true);
-  showStatus(loginStatus, "Admin authenticated.", "success");
-  startStudentsListener();
-});
-
-/* REALTIME STUDENT LISTENER */
-
-function startStudentsListener() {
-
-  if (stopStudentsListener) {
-    stopStudentsListener();
-  }
-
-  const studentsRef = ref(database, "students");
-
-  stopStudentsListener = onValue(
-    studentsRef,
-    (snapshot) => {
-
-      const data = snapshot.val() || {};
-
-      students = Object.entries(data).map(([id, student]) => ({
-        id,
-        ...student
-      }));
-
-      $("studentCount").textContent = students.length;
-
-      renderStudents();
-
-      showStatus(
-        directoryStatus,
-        "Student records synchronized.",
-        "success"
-      );
-    },
-    (error) => {
-      showStatus(
-        directoryStatus,
-        "Database error: " + error.message,
-        "error"
-      );
-    }
-  );
 }
 
-/* ADD / UPDATE STUDENT */
+studentForm.addEventListener("submit",event=>{
+event.preventDefault();
 
-$("studentForm").addEventListener("submit", async (event) => {
+const name=studentNameInput.value.trim();
+const roll=rollNumberInput.value.trim();
+const className=studentClassInput.value.trim();
+const section=studentSectionInput.value.trim();
+const cardUID=cardUIDInput.value.trim().replace(/\s+/g,"").toUpperCase();
+const editingId=editingStudentIdInput.value;
+const students=getStudents();
 
-  event.preventDefault();
+if(!name||!roll||!className){
+showMessage("Please fill in Name, Roll Number and Class.",true);
+return;
+}
 
-  if (auth.currentUser?.uid !== ADMIN_UID) {
-    showStatus(formStatus, "Admin access required.", "error");
-    return;
-  }
+if(students.some(s=>normalize(s.rollNumber)===normalize(roll)&&s.id!==editingId)){
+showMessage("This roll number is already registered.",true);
+return;
+}
 
-  const name = $("studentName").value.trim();
-  const roll = $("rollNumber").value.trim();
-  const className = $("className").value.trim();
-  const section = $("sectionName").value.trim();
-  const cardUID = $("rfidUID").value.trim();
+if(cardUID&&students.some(s=>normalize(s.cardUID)===normalize(cardUID)&&s.id!==editingId)){
+showMessage("This RFID UID is already assigned.",true);
+return;
+}
 
-  if (!name || !roll || !className) {
-    showStatus(formStatus, "Fill all required fields.", "error");
-    return;
-  }
-
-  const duplicateRoll = students.some(student =>
-    student.id !== editingStudentId &&
-    String(student.roll || "").toLowerCase() === roll.toLowerCase()
-  );
-
-  if (duplicateRoll) {
-    showStatus(formStatus, "This roll number already exists.", "error");
-    return;
-  }
-
-  if (cardUID) {
-    const duplicateUID = students.some(student =>
-      student.id !== editingStudentId &&
-      String(student.cardUID || "").toLowerCase() === cardUID.toLowerCase()
-    );
-
-    if (duplicateUID) {
-      showStatus(formStatus, "This RFID UID is already assigned.", "error");
-      return;
-    }
-  }
-
-  const studentData = {
-    name,
-    roll,
-    class: className,
-    section,
-    cardUID,
-    updatedAt: Date.now()
-  };
-
-  const saveButton = $("saveBtn");
-  saveButton.disabled = true;
-
-  try {
-
-    if (editingStudentId) {
-
-      await update(
-        ref(database, "students/" + editingStudentId),
-        studentData
-      );
-
-      showStatus(formStatus, "Student updated successfully.", "success");
-
-    } else {
-
-      studentData.createdAt = Date.now();
-
-      const newStudentRef = push(ref(database, "students"));
-      await set(newStudentRef, studentData);
-
-      showStatus(formStatus, "Student registered successfully.", "success");
-    }
-
-    resetStudentForm();
-
-  } catch (error) {
-
-    showStatus(
-      formStatus,
-      "Unable to save student: " + error.message,
-      "error"
-    );
-
-  } finally {
-    saveButton.disabled = false;
-  }
+if(editingId){
+const index=students.findIndex(s=>s.id===editingId);
+if(index<0){
+showMessage("Student not found.",true);
+return;
+}
+students[index]={...students[index],name,rollNumber:roll,className,section,cardUID};
+if(!saveStudents(students))return;
+resetForm();
+showMessage("Student details updated successfully.");
+}else{
+students.unshift({
+id:Date.now().toString(36)+Math.random().toString(36).slice(2),
+name,
+rollNumber:roll,
+className,
+section,
+cardUID,
+createdAt:new Date().toISOString()
+});
+if(!saveStudents(students))return;
+studentForm.reset();
+showMessage("Student registered successfully.");
+}
+renderStudents();
 });
 
-/* EDIT STUDENT */
+function editStudent(id){
+const s=getStudents().find(student=>student.id===id);
+if(!s)return;
 
-window.editStudent = function(id) {
+studentNameInput.value=s.name||"";
+rollNumberInput.value=s.rollNumber||"";
+studentClassInput.value=s.className||"";
+studentSectionInput.value=s.section||"";
+cardUIDInput.value=s.cardUID||"";
+editingStudentIdInput.value=s.id;
 
-  if (auth.currentUser?.uid !== ADMIN_UID) return;
-
-  const student = students.find(item => item.id === id);
-
-  if (!student) return;
-
-  editingStudentId = id;
-
-  $("studentName").value = student.name || "";
-  $("rollNumber").value = student.roll || "";
-  $("className").value = student.class || "";
-  $("sectionName").value = student.section || "";
-  $("rfidUID").value = student.cardUID || "";
-
-  $("formTitle").textContent = "Edit Student";
-  $("saveBtn").textContent = "Update Student";
-  $("cancelEditBtn").classList.remove("hidden");
-
-  showStatus(formStatus, "Editing " + student.name, "");
-
-  $("studentName").focus();
-};
-
-/* DELETE STUDENT */
-
-window.deleteStudent = async function(id) {
-
-  if (auth.currentUser?.uid !== ADMIN_UID) return;
-
-  const student = students.find(item => item.id === id);
-
-  if (!student) return;
-
-  const confirmed = confirm(
-    "Delete student " + student.name + "?"
-  );
-
-  if (!confirmed) return;
-
-  try {
-
-    await remove(ref(database, "students/" + id));
-
-    if (editingStudentId === id) {
-      resetStudentForm();
-    }
-
-    showStatus(directoryStatus, "Student deleted successfully.", "success");
-
-  } catch (error) {
-
-    showStatus(
-      directoryStatus,
-      "Delete failed: " + error.message,
-      "error"
-    );
-  }
-};
-
-/* RESET FORM */
-
-function resetStudentForm() {
-
-  $("studentForm").reset();
-
-  editingStudentId = null;
-
-  $("formTitle").textContent = "Register New Student";
-  $("saveBtn").textContent = "Add Student";
-  $("cancelEditBtn").classList.add("hidden");
+saveStudentBtn.textContent="Update Student";
+cancelEditBtn.hidden=false;
+showMessage("Editing student details.");
+document.getElementById("registration").scrollIntoView({behavior:"smooth"});
+studentNameInput.focus();
 }
 
-$("cancelEditBtn").addEventListener("click", resetStudentForm);
+function deleteStudent(id){
+const students=getStudents();
+const student=students.find(s=>s.id===id);
+if(!student)return;
 
-/* SEARCH AND RENDER */
+if(!confirm("Delete "+student.name+" ("+student.rollNumber+")?"))return;
 
-function renderStudents() {
+if(!saveStudents(students.filter(s=>s.id!==id)))return;
+if(editingStudentIdInput.value===id)resetForm();
 
-  const query = $("searchInput").value.trim().toLowerCase();
-
-  const filteredStudents = students.filter(student => {
-
-    const searchable = [
-      student.name,
-      student.roll,
-      student.class,
-      student.section,
-      student.cardUID
-    ].join(" ").toLowerCase();
-
-    return searchable.includes(query);
-  });
-
-  const table = $("studentTable");
-  table.innerHTML = "";
-
-  if (filteredStudents.length === 0) {
-
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
-
-    cell.colSpan = 6;
-    cell.textContent = students.length
-      ? "No matching students found."
-      : "No students registered yet.";
-
-    row.appendChild(cell);
-    table.appendChild(row);
-    return;
-  }
-
-  filteredStudents.forEach(student => {
-
-    const row = document.createElement("tr");
-
-    const values = [
-      student.name || "",
-      student.roll || "",
-      student.class || "",
-      student.section || "",
-      student.cardUID || "Not assigned"
-    ];
-
-    values.forEach(value => {
-
-      const cell = document.createElement("td");
-      cell.textContent = value;
-      row.appendChild(cell);
-
-    });
-
-    const actionCell = document.createElement("td");
-    const actionBox = document.createElement("div");
-
-    actionBox.className = "action-buttons";
-
-    const editButton = document.createElement("button");
-    editButton.className = "edit-btn";
-    editButton.textContent = "Edit";
-    editButton.addEventListener("click", () => editStudent(student.id));
-
-    const deleteButton = document.createElement("button");
-    deleteButton.className = "danger-btn";
-    deleteButton.textContent = "Delete";
-    deleteButton.addEventListener("click", () => deleteStudent(student.id));
-
-    actionBox.append(editButton, deleteButton);
-    actionCell.appendChild(actionBox);
-    row.appendChild(actionCell);
-
-    table.appendChild(row);
-  });
+showMessage("Student deleted.");
+renderStudents();
 }
 
-$("searchInput").addEventListener("input", renderStudents);
-
-/* LOGOUT */
-
-$("logoutBtn").addEventListener("click", async () => {
-
-  try {
-
-    if (stopStudentsListener) {
-      stopStudentsListener();
-      stopStudentsListener = null;
-    }
-
-    resetStudentForm();
-    await signOut(auth);
-
-    showStatus(loginStatus, "Logged out successfully.", "success");
-
-  } catch (error) {
-
-    showStatus(loginStatus, error.message, "error");
-  }
+cancelEditBtn.addEventListener("click",()=>{
+resetForm();
+showMessage("Edit cancelled.");
 });
 
-/* FRIENDLY FIREBASE ERRORS */
+studentSearch.addEventListener("input",renderStudents);
 
-function getFriendlyError(error) {
-
-  const code = error.code || "";
-
-  const messages = {
-    "auth/invalid-credential": "Incorrect email or password.",
-    "auth/invalid-email": "Enter a valid email address.",
-    "auth/user-disabled": "This account has been disabled.",
-    "auth/too-many-requests": "Too many attempts. Try again later.",
-    "auth/network-request-failed": "Check your internet connection."
-  };
-
-  return messages[code] || error.message || "Login failed.";
-}
-
+renderStudents();
 </script>
 
 </body>
